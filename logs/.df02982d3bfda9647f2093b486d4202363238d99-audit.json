@@ -9,6 +9,11 @@
             "date": 1609833736611,
             "name": "logs/info.log.2021-01-05",
             "hash": "1f85a638e50356aee7ae3cd9bcfe1b63"
+        },
+        {
+            "date": 1616602822900,
+            "name": "logs/info.log.2021-03-25",
+            "hash": "fdf6d6c8038f20ddaad0c9b9ec4dbde0"
         }
     ]
 }

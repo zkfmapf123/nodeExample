@@ -1,13 +1,12 @@
 import * as mysql2 from "mysql2/promise";
-import * as dotenv from "dotenv";
-dotenv.config();
+import config from "../Configs/index";
 
 const dbConfig = {
-    host : "",
-    user : "",
-    password : "",
-    database : "",
-    port : 3306,
+    host : config.db_host,
+    user : config.db_user,
+    password : config.db_password,
+    database : "design",
+    port : +config.db_port,
     connectionLimit : 10,
     waitForConnections : true
 };

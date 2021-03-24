@@ -1,21 +1,22 @@
 import {Request, Response} from "express";
 import pool from "../../Configs/database";
 import index from "../../Configs/index";
+import HomeService from "../Services/Home/HomeService";
 
-class Home{
-    private dbConn : any;
-    
-    constructor() {
-        
-    }
+const homeService : HomeService = new HomeService();
 
-    public home(req : Request, res: Response) : any{
-        
-        return res.json({
-            message: "hello world"
-        })
-        .status(200);
+const home = async(req: Request, res : Response) : Promise<any> =>{
+    try{
+        const result = await homeService.getHome();
+
+        return res.status(200).json({
+            result
+        });
+    }catch(e){
+        console.error(e);  
     }
 };
 
-export default new Home;
+export default {
+    home
+}

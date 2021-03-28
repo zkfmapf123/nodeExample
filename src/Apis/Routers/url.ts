@@ -1,0 +1,3 @@
+export enum Eurl{
+    home = "/",
+}

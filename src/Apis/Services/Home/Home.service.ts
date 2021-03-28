@@ -1,9 +1,10 @@
 import {IHome} from "./Home.interface";
+import pool from "../../../Configs/database";
 
 class HomeService implements IHome{
 
     constructor(){
-        console.log("HomeService");
+        
     }
    
     async getHome(): Promise<any>{
@@ -11,4 +12,4 @@ class HomeService implements IHome{
     }
 };
 
-export default HomeService;
+export default new HomeService;

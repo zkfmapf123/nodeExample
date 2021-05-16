@@ -5,7 +5,7 @@ import { Eurl } from "./url";
 const route = Router();
 
 export default(app : Router) =>{
-    app.use(Eurl.home,verifyHome,route);
+    app.use(Eurl.home,route);
     
     route.get(Eurl.home,HomeController.home);
 }

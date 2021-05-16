@@ -12,4 +12,5 @@ export default {
     db_port : process.env.MYSQL_PORT,
 
     //그 외 나머지
+    env : process.env.ENV,
 }

@@ -4,13 +4,18 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import logger from "./logger";
 import api from "../Apis/api";
+import config from "../Configs/index";
+import os from "os";
+import cluster from "cluster";
 
 class index{
     private app : express.Application;
-    private port : number;
+    private port: number;
+    private cpuNum: number;
 
     constructor(app : express.Application, port : number){
         this.app = app;
+        this.cpuNum = os.cpus().length;
         this.port= port;
         this.endpoint();
         this.setting();
@@ -31,11 +36,12 @@ class index{
         })
     }
 
-    //setting
+    //middleware
     private setting(){
         console.log("setting");
 
         this.app.enable("trust proxy");
+        // helmet 공부하자
         this.app.use(cors());
         this.app.use(require("method-override")());
         this.app.use(bodyParser.json());
@@ -76,13 +82,26 @@ class index{
     };
 
     public async start(){
-        try{
-            this.app.listen(this.port,()=>{
-                logger.info(`app running http://localhost:${this.port}`);
-            }).on("error",err=>{
-                logger.error(err);
-                process.exit(1);
-            })
+        try {
+            if(config.env === "production" && cluster.isMaster){
+                for (let i = 0; i < this.cpuNum; i++) {
+                    cluster.fork();
+                }
+            } else {
+                this.app.listen(this.port, () => {
+                    logger.info(`${process.pid} is connected http://localhost:${this.port}`);
+                }).on('error', err => {
+                    logger.error(err);
+                    process.exit(1);
+                });
+
+                console.log("dev mode");
+
+                cluster.on('exit', (worker, code, signal) => {
+                    logger.info(`${process.pid} is disconnected`);
+                    cluster.fork();
+                });
+            }
         }catch(e){
             logger.error("app start error");
         }

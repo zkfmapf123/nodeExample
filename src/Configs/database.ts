@@ -13,13 +13,16 @@ const dbConfig = {
 };
 
 //redis
+const redisConfig = {
+
+}
 
 export default(db : "mysql2" | "redis")=>{
     if(db === "mysql2"){
         return mysql2.createPool(dbConfig);    
     }else{
         //아직 없음
-        return mysql2.createPool(dbConfig);
+        return mysql2.createPool(redisConfig);
     }
 }
 

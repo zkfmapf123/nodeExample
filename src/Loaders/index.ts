@@ -8,16 +8,21 @@ import config from "../Configs/index";
 import os from "os";
 import cluster from "cluster";
 
-class index{
-    private app : express.Application;
-    private port: number;
-    private cpuNum: number;
+export type envType = "devlopment" | "production";
 
-    constructor(app : express.Application, port : number){
+class index{
+    private readonly app : express.Application;
+    private readonly port: number;
+    private readonly cpuNum: number;
+    private readonly env: envType;
+
+    constructor(app : express.Application, port : number, env : envType){
         this.app = app;
         this.cpuNum = os.cpus().length;
         this.port= port;
         this.endpoint();
+        this.env = env;
+
         this.setting();
         this.app.use("/api",api());
         this.errorHandling();

@@ -49,8 +49,8 @@ class index{
         // helmet 공부하자
         this.app.use(cors());
         this.app.use(require("method-override")());
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({extended : false}));
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({extended : false}));
     }
 
     //errorhandling
@@ -88,7 +88,7 @@ class index{
 
     public async start(){
         try {
-            if(config.env === "production" && cluster.isMaster){
+            if(this.env === "production" && cluster.isMaster){
                 for (let i = 0; i < this.cpuNum; i++) {
                     cluster.fork();
                 }
